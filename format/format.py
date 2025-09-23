@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 def create_truth_table(expression: "Expression") -> str:
     """Generates the truth table for the entire expression."""
 
-    variables = sorted(list(expression.__set__()))
+    variables = sorted(expression.variables)
 
     # Generate all possible combinations for the variables
     combinations = [*product([True, False], repeat=len(variables))]
