@@ -5,16 +5,20 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "demorganizer"
 version = "2025.7.0"
-description = "A library to analyze, simplify, and refactor complex logical conditions using De Morgan's laws."
+description = "A Python toolkit for automating common Computer Science calculations, covering Boolean algebra, propositional logic, and numerical methods."
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Othon Hugo" }]
 keywords = [
     "boolean algebra",
-    "logic",
-    "de morgan",
-    "simplification",
     "propositional logic",
+    "de morgan",
+    "numerical methods",
+    "bisection",
+    "false position",
+    "truth table",
+    "computer science",
+    "education",
 ]
 requires-python = ">=3.11"
 dependencies = ["tabulate>=0.9.0"]
@@ -22,6 +26,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
@@ -29,6 +34,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Education",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]

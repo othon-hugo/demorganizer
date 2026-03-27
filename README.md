@@ -2,86 +2,72 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`demorganizer` is a Python-based framework for constructing, evaluating, and visualizing Boolean algebra expressions. It leverages object-oriented principles to represent logical expressions as a tree structure, allowing for intuitive construction using Python's operator overloading and generating truth tables.
+`demorganizer` is a Python toolkit for automating common Computer Science calculations. It provides ready-to-use implementations of algebraic structures, propositional logic theorems, and numerical root-finding methods — built to help CS students and educators apply mathematical concepts without getting bogged down by the underlying mechanics.
 
-## Features
+### Modules
 
-*   **Expression Tree:** Build complex Boolean expressions using `Variable`, `Constant`, `UnaryOperation`, and `BinaryOperation` classes.
-*   **Operator Overloading:** Use standard Python logical operators (`&`, `|`, `^`, `~`) to intuitively combine expressions.
-*   **Expression Evaluation:** Evaluate expressions by providing a dictionary of variable bindings.
-*   **Truth Table Generation:** Generate comprehensive truth tables for any given expression, beautifully formatted using the `tabulate` library.
+This section outlines the core components and modules that make up the project. Each module encapsulates a specific domain of functionality, promoting a clear separation of concerns, code reusability, and easier maintainability.
 
-## Project Structure
+### `algebra` — Algebra Engine
 
-The project is organized into two main components:
+| Implementation    | Type               | Description                                                        |
+| ----------------- | ------------------ | ------------------------------------------------------------------ |
+| `Expression`      | `class` (abstract) | Base class for all algebraic expressions                           |
+| `Variable`        | `class`            | A named, single-character symbolic variable                        |
+| `Constant`        | `class`            | A fixed boolean value (`True` or `False`)                          |
+| `TRUE`, `FALSE`   | `Constant`         | Sentinel instances for the boolean constants                       |
+| `UnaryOperation`  | `class`            | Applies a unary operator (e.g. `~`) to one operand                 |
+| `BinaryOperation` | `class`            | Applies a binary operator (`&`, `\|`, `^`) to two operands         |
+| `Signal`          | `enum`             | Arithmetic sign of a numeric value: positive, negative, or neutral |
+| `Number`          | `TypeAlias`        | Numeric scalar — `int \| float`                                    |
+| `UnaryFunction`   | `TypeAlias`        | A function mapping a `Number` to a `Number`                        |
 
-1.  **`algebra` module:** Contains the core classes for defining and manipulating Boolean expressions.
-2.  **`format` module:** Provides utilities for presenting expressions, specifically for generating truth tables.
+### `algo` — Algorithms
+
+#### Propositional Logic
+
+| Implementation                  | Type       | Description                             |
+| ------------------------------- | ---------- | --------------------------------------- |
+| `apply_double_negation`         | `function` | `~~A → A`                               |
+| `apply_unary_constant_folding`  | `function` | `~True → False`, `~False → True`        |
+| `apply_binary_constant_folding` | `function` | `True & False → False`                  |
+| `apply_idempotent_law`          | `function` | `A \| A → A`, `A & A → A`               |
+| `apply_inverse_law`             | `function` | `A \| ~A → True`, `A & ~A → False`      |
+| `apply_annihilation_law`        | `function` | `A \| True → True`, `A & False → False` |
+| `apply_identity_law`            | `function` | `A \| False → A`, `A & True → A`        |
+
+#### Numerical Methods
+
+| Implementation                  | Type                 | Description                                                      |
+| ------------------------------- | -------------------- | ---------------------------------------------------------------- |
+| `calculate_bisection_x`         | `function`           | Computes the midpoint of an interval                             |
+| `find_required_bisection_steps` | `function`           | Calculates the number of iterations needed for a given precision |
+| `apply_bisection_by_steps`      | `generator function` | Runs bisection for a fixed number of steps                       |
+| `apply_bisection_by_tolerance`  | `generator function` | Runs bisection until an error tolerance is met                   |
+| `calculate_false_position_x`    | `function`           | Computes the false-position root estimate for an interval        |
+| `apply_false_position_by_steps` | `generator function` | Runs the Regula Falsi method for a fixed number of steps         |
+
+### `format` — Visualisation
+
+| Implementation       | Type       | Description                                                  |
+| -------------------- | ---------- | ------------------------------------------------------------ |
+| `create_truth_table` | `function` | Generates a formatted truth table for any Boolean expression |
 
 ## Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/othonhugo/demorganizer.git
-    cd demorganizer
-    ```
-
-2.  **Install dependencies:**
-    This project requires the `tabulate` library for truth table formatting.
-
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+git clone https://github.com/othonhugo/demorganizer.git
+cd demorganizer
+pip install .
+```
 
 ## Usage
 
-### 1. Defining Expressions
-
-You can define variables and constants, then combine them using Python's logical operators.
-
-```python
-from algebra import Variable, Constant, TRUE, FALSE
-
-# Define variables
-A = Variable("A")
-B = Variable("B")
-C = Variable("C")
-
-# Construct your expressions
-expr1 = (A & B) | ~C
-expr2 = A ^ (B | FALSE)
-
-# Example with direct boolean literals (automatically converted to Constants)
-expr3 = (A | (B & True)) | ~False
-```
-
-### 2. Evaluating Expressions
-
-Use the `evaluate()` method on an expression, passing a dictionary of variable bindings.
+<details>
+<summary>Boolean algebra</summary>
 
 ```python
-from algebra import Variable
-
-A = Variable("A")
-B = Variable("B")
-
-expr = A & B
-
-# Evaluate with specific values for A and B
-bindings_11 = {"A": True, "B": True}
-bindings_12 = {"A": True, "B": False}
-
-print(expr.evaluate(bindings_11)) # True
-print(expr.evaluate(bindings_12)) # False
-```
-
-### 3. Generating Truth Tables
-
-The `create_truth_table` function from the `format` module will generate a string representation of the truth table.
-
-```python
-from algebra import Variable
-from format import create_truth_table
+from demorganizer.algebra import Variable, TRUE, FALSE
 
 A = Variable("A")
 B = Variable("B")
@@ -89,12 +75,29 @@ C = Variable("C")
 
 expr = (A & B) | ~C
 
-print(create_truth_table(expr))
+# Evaluate for specific variable bindings
+print(expr.evaluate({"A": True, "B": True, "C": False}))  # True
 ```
 
-This will output:
+</details>
 
+---
+
+<details>
+<summary>Truth table</summary>
+
+```python
+from demorganizer.algebra import Variable
+from demorganizer.format import create_truth_table
+
+A = Variable("A")
+B = Variable("B")
+C = Variable("C")
+
+print(create_truth_table((A & B) | ~C))
 ```
+
+```text
  A    B    C    ((A & B) | (~C))
 ---  ---  ---  ------------------
  1    1    1           1
@@ -106,3 +109,26 @@ This will output:
  0    0    1           0
  0    0    0           1
 ```
+
+</details>
+
+---
+
+<details>
+<summary>Numerical methods</summary>
+
+```python
+from demorganizer.algo.numeric_methods.bisection import apply_bisection_by_tolerance
+
+# Find the root of f(x) = x² - 2 in [1, 2] with precision 1e-6
+steps = apply_bisection_by_tolerance(lambda x: x**2 - 2, (1, 2), precision=1e-6)
+
+for x in steps:
+    print(x)
+```
+
+</details>
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
