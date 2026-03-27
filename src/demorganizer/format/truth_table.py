@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 from tabulate import tabulate
 
 if TYPE_CHECKING:
-    from algebra.algebra import Expression
+    from demorganizer import algebra
 
 
-def create_truth_table(expression: "Expression") -> str:
+def create_truth_table(expression: "algebra.Expression") -> str:
     """Generates the truth table for the entire expression."""
 
     variables = sorted(expression.variables)
