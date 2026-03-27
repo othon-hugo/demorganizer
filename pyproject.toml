@@ -1,20 +1,58 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=72"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "demorganizer"
 version = "2025.7.0"
-description = "demorganizer is designed analyze, simplify, and refactor complex logical conditions."
-dependencies = ["tabulate >= 0.9.0"]
+description = "A library to analyze, simplify, and refactor complex logical conditions using De Morgan's laws."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Othon Hugo" }]
+keywords = [
+    "boolean algebra",
+    "logic",
+    "de morgan",
+    "simplification",
+    "propositional logic",
+]
 requires-python = ">=3.11"
-classifiers = ["Development Status :: 4 - Beta", "Programming Language :: Python :: 3.11"]
+dependencies = ["tabulate>=0.9.0"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
 
 [project.urls]
-Homepage = "https://github.com/othonhugo/demorganizer/"
+Homepage = "https://github.com/othonhugo/demorganizer"
 Repository = "https://github.com/othonhugo/demorganizer.git"
 Issues = "https://github.com/othonhugo/demorganizer/issues"
 
 [project.optional-dependencies]
-lint = ["flake8"]
-dev = ["mypy"]
+dev = ["mypy>=1.0", "flake8>=7.0"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+check_untyped_defs = true
+ignore_missing_imports = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+explicit_package_bases = true
