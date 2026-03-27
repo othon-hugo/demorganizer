@@ -8,7 +8,8 @@
 
 This section outlines the core components and modules that make up the project. Each module encapsulates a specific domain of functionality, promoting a clear separation of concerns, code reusability, and easier maintainability.
 
-### `algebra` — Algebra Engine
+<details>
+<summary><strong><code>algebra</code> — Algebra Engine</strong></summary>
 
 | Implementation    | Type               | Description                                                        |
 | ----------------- | ------------------ | ------------------------------------------------------------------ |
@@ -22,7 +23,10 @@ This section outlines the core components and modules that make up the project. 
 | `Number`          | `TypeAlias`        | Numeric scalar — `int \| float`                                    |
 | `UnaryFunction`   | `TypeAlias`        | A function mapping a `Number` to a `Number`                        |
 
-### `algo` — Algorithms
+</details>
+
+<details>
+<summary><strong><code>algo</code> — Algorithms</strong></summary>
 
 #### Propositional Logic
 
@@ -36,7 +40,7 @@ This section outlines the core components and modules that make up the project. 
 | `apply_annihilation_law`        | `function` | `A \| True → True`, `A & False → False` |
 | `apply_identity_law`            | `function` | `A \| False → A`, `A & True → A`        |
 
-#### Numerical Methods
+#### Numerical Calculus
 
 | Implementation                  | Type                 | Description                                                      |
 | ------------------------------- | -------------------- | ---------------------------------------------------------------- |
@@ -47,11 +51,16 @@ This section outlines the core components and modules that make up the project. 
 | `calculate_false_position_x`    | `function`           | Computes the false-position root estimate for an interval        |
 | `apply_false_position_by_steps` | `generator function` | Runs the Regula Falsi method for a fixed number of steps         |
 
-### `format` — Visualisation
+</details>
+
+<details>
+<summary><strong><code>format</code> — Visualisation</strong></summary>
 
 | Implementation       | Type       | Description                                                  |
 | -------------------- | ---------- | ------------------------------------------------------------ |
 | `create_truth_table` | `function` | Generates a formatted truth table for any Boolean expression |
+
+</details>
 
 ## Installation
 
@@ -64,7 +73,7 @@ pip install .
 ## Usage
 
 <details>
-<summary>Boolean algebra</summary>
+<summary><strong>Boolean algebra</strong></summary>
 
 ```python
 from demorganizer.algebra import Variable, TRUE, FALSE
@@ -81,10 +90,8 @@ print(expr.evaluate({"A": True, "B": True, "C": False}))  # True
 
 </details>
 
----
-
 <details>
-<summary>Truth table</summary>
+<summary><strong>Truth table</strong></summary>
 
 ```python
 from demorganizer.algebra import Variable
@@ -112,13 +119,11 @@ print(create_truth_table((A & B) | ~C))
 
 </details>
 
----
-
 <details>
-<summary>Numerical methods</summary>
+<summary><strong>Numerical methods</strong></summary>
 
 ```python
-from demorganizer.algo.numeric_methods.bisection import apply_bisection_by_tolerance
+from demorganizer.algo import apply_bisection_by_tolerance
 
 # Find the root of f(x) = x² - 2 in [1, 2] with precision 1e-6
 steps = apply_bisection_by_tolerance(lambda x: x**2 - 2, (1, 2), precision=1e-6)

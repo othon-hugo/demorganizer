@@ -7,16 +7,16 @@ if TYPE_CHECKING:
 
 def calculate_bisection_x(a: "algebra.Number", b: "algebra.Number") -> "algebra.Number":
     """Returns the midpoint of the interval [a, b]."""
+
     return (a + b) / 2
 
 
-def find_required_bisection_steps(
-    precision: float, interval: tuple["algebra.Number", "algebra.Number"]
-) -> int:
+def find_required_bisection_steps(precision: float, interval: tuple["algebra.Number", "algebra.Number"]) -> int:
     """Returns the number of iterations needed to reach the desired precision.
 
     Based on the bisection error bound: n > (log(b - a) - log(precision)) / log(2).
     """
+
     a, b = interval
 
     return ceil((log(b - a) - log(precision)) / log(2)) + 1
@@ -28,6 +28,7 @@ def apply_bisection_by_steps(
     steps: int,
 ) -> Generator[float, None, None]:
     """Runs the bisection method for a fixed number of iterations, yielding each midpoint."""
+
     a, b = interval
     y_a = f(a)
     y_b = f(b)
@@ -54,6 +55,7 @@ def apply_bisection_by_tolerance(
     precision: float,
 ) -> Generator[float, None, None]:
     """Finds the root by running bisection until the error tolerance is met."""
+
     steps = find_required_bisection_steps(precision, interval)
 
     return apply_bisection_by_steps(f, interval, steps)

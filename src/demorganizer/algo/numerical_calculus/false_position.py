@@ -11,6 +11,7 @@ def calculate_false_position_x(
     y_b: "algebra.Number",
 ) -> "algebra.Number":
     """Returns the false-position estimate of the root within [a, b]."""
+
     return ((a * y_b) - (b * y_a)) / (y_b - y_a)
 
 
@@ -20,6 +21,7 @@ def apply_false_position_by_steps(
     steps: int,
 ) -> Generator[float, None, None]:
     """Runs the false-position method for a fixed number of iterations, yielding each estimate."""
+
     a, b = interval
 
     y_a = f(a)
