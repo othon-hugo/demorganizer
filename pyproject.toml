@@ -45,7 +45,7 @@ Repository = "https://github.com/othonhugo/demorganizer.git"
 Issues = "https://github.com/othonhugo/demorganizer/issues"
 
 [project.optional-dependencies]
-dev = ["mypy>=1.0", "flake8>=7.0"]
+dev = ["mypy>=1.0", "flake8>=7.0", "pytest>=8.0"]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
@@ -70,3 +70,6 @@ target-version = ["py312"]
 [tool.isort]
 profile = "black"
 line_length = 150
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
