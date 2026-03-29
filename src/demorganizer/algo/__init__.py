@@ -1,7 +1,7 @@
 from .equation_solving import isolate_linear_variable
 from .numerical_calculus import (
+    calculate_bisection_steps,
     iter_bisection,
-    iter_bisection_by_tolerance,
     iter_false_position,
     iter_linear_iteration,
     iter_newton_raphson,
@@ -26,8 +26,8 @@ __all__ = [
     "apply_inverse_law",
     "apply_unary_constant_folding",
     "isolate_linear_variable",
+    "calculate_bisection_steps",
     "iter_bisection",
-    "iter_bisection_by_tolerance",
     "iter_false_position",
     "iter_linear_iteration",
     "iter_newton_raphson",

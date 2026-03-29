@@ -3,7 +3,9 @@ from typing import Generator
 
 from demorganizer.core import Interval, Number, UnaryFunction
 
-# --- Bisection ----
+# -----------------------------------------------------------------------------
+# Bisection
+# -----------------------------------------------------------------------------
 
 
 def iter_bisection(f: "UnaryFunction", interval: Interval, steps: int) -> Generator[float, None, None]:
@@ -53,7 +55,9 @@ def _calculate_bisection_midpoint(a: Number, b: Number) -> Number:
     return (a + b) / 2.0
 
 
-# --- False position ----
+# -----------------------------------------------------------------------------
+# False position
+# -----------------------------------------------------------------------------
 
 
 def iter_false_position(f: "UnaryFunction", interval: tuple[Number, Number], steps: int) -> Generator[float, None, None]:
@@ -90,7 +94,10 @@ def _calculate_false_position_midpoint(a: Number, b: Number, y_a: Number, y_b: N
 
     return ((a * y_b) - (b * y_a)) / (y_b - y_a)
 
-# --- Linear iteration (fixed-point) ---
+
+# -----------------------------------------------------------------------------
+# Linear iteration (fixed-point)
+# -----------------------------------------------------------------------------
 
 
 def iter_linear_iteration(phi: UnaryFunction, x0: Number, steps: int) -> Generator[float, None, None]:
@@ -108,7 +115,9 @@ def iter_linear_iteration(phi: UnaryFunction, x0: Number, steps: int) -> Generat
         yield x
 
 
-# --- Newton-Raphson ---
+# -----------------------------------------------------------------------------
+# Newton-Raphson
+# -----------------------------------------------------------------------------
 
 
 def iter_newton_raphson(f: UnaryFunction, df: UnaryFunction, x0: Number, steps: int) -> Generator[float, None, None]:
@@ -132,7 +141,9 @@ def iter_newton_raphson(f: UnaryFunction, df: UnaryFunction, x0: Number, steps: 
         yield x
 
 
-# --- Secant ---
+# -----------------------------------------------------------------------------
+# Secant
+# -----------------------------------------------------------------------------
 
 
 def iter_secant(f: UnaryFunction, x0: Number, x1: Number, steps: int) -> Generator[float, None, None]:
@@ -154,6 +165,9 @@ def iter_secant(f: UnaryFunction, x0: Number, x1: Number, steps: int) -> Generat
         denominator = f_curr - f_prev
 
         if denominator == 0:
+            if x_prev == x_curr:
+                return  # converged to machine precision; stop cleanly
+
             raise ZeroDivisionError("Secant slope is zero; method cannot continue.")
 
         x_next = x_curr - f_curr * (x_curr - x_prev) / denominator
