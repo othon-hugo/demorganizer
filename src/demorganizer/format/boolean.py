@@ -1,13 +1,11 @@
 from itertools import product
-from typing import TYPE_CHECKING
 
 from tabulate import tabulate
 
-if TYPE_CHECKING:
-    from demorganizer import algebra
+from demorganizer.engine.boolean import BooleanExpression
 
 
-def create_truth_table(expression: "algebra.Expression") -> str:
+def create_truth_table(expression: BooleanExpression) -> str:
     """Generates the truth table for the entire expression."""
 
     variables = sorted(expression.variables)
